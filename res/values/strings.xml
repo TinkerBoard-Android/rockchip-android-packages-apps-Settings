@@ -12405,4 +12405,6 @@
     <string name="display_contrast_title">Contrast</string>
     <string name="display_saturation_title">Saturation</string>
     <!-- ======================================== -->
+
+    <string name="full_screen_switch">Full Screen</string>
 </resources>
