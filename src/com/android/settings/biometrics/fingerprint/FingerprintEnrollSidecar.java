@@ -28,7 +28,8 @@ import android.util.Log;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.settings.R;
 import com.android.settings.biometrics.BiometricEnrollSidecar;
-
+import com.android.settings.biometrics.face.FaceSquareTextureView;
+import android.view.Surface;
 /**
  * Sidecar fragment to handle the state around fingerprint enrollment.
  */
@@ -142,5 +143,10 @@ public class FingerprintEnrollSidecar extends BiometricEnrollSidecar {
     @Override
     public int getMetricsCategory() {
         return SettingsEnums.FINGERPRINT_ENROLL_SIDECAR;
+    }
+
+    @Override
+    public void onPreviewCreate(Surface surface) {
+
     }
 }

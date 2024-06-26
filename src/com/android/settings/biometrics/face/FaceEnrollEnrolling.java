@@ -144,6 +144,7 @@ public class FaceEnrollEnrolling extends BiometricsEnrollEnrolling {
                     .commitAllowingStateLoss();
         }
         mPreviewFragment.setListener(mListener);
+        mPreviewFragment.addFacePreviewListener(mSidecar);
     }
 
     @Override

@@ -19,7 +19,7 @@ package com.android.settings.biometrics.face;
 import android.app.Activity;
 import android.app.settings.SettingsEnums;
 import android.hardware.face.FaceManager;
-
+import android.view.Surface;
 import com.android.settings.biometrics.BiometricEnrollSidecar;
 
 import java.util.Arrays;
@@ -27,8 +27,8 @@ import java.util.Arrays;
 /**
  * Sidecar fragment to handle the state around face enrollment
  */
-public class FaceEnrollSidecar extends BiometricEnrollSidecar {
-
+public class FaceEnrollSidecar extends BiometricEnrollSidecar implements FacePreviewListener{
+    private final String TAG = "FaceEnrollSidecar";
     private final int[] mDisabledFeatures;
 
     private FaceUpdater mFaceUpdater;
@@ -46,8 +46,8 @@ public class FaceEnrollSidecar extends BiometricEnrollSidecar {
     @Override
     public void startEnrollment() {
         super.startEnrollment();
-        mFaceUpdater.enroll(mUserId, mToken, mEnrollmentCancel,
-                mEnrollmentCallback, mDisabledFeatures);
+//        mFaceUpdater.enroll(mUserId, mToken, mEnrollmentCancel,
+//                mEnrollmentCallback, mDisabledFeatures);
     }
 
     private FaceManager.EnrollmentCallback mEnrollmentCallback
@@ -72,5 +72,11 @@ public class FaceEnrollSidecar extends BiometricEnrollSidecar {
     @Override
     public int getMetricsCategory() {
         return SettingsEnums.FACE_ENROLL_SIDECAR;
+    }
+
+    @Override
+    public void onPreviewCreate(Surface surface) {
+        mFaceUpdater.enroll(mUserId, mToken, mEnrollmentCancel,
+                mEnrollmentCallback, mDisabledFeatures,surface,false);
     }
 }

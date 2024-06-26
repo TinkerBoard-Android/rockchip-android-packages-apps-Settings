@@ -16,6 +16,8 @@
 
 package com.android.settings.display;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -28,7 +30,7 @@ public class DisplayInfo implements Serializable {
     private String[] modes;
     private String[] orginModes;
     private String currentResolution;
-    private String lastResolution = "Auto";
+    private String lastResolution = "";//""Auto";
 
     public int getDisplayId() {
         return displayId;
@@ -98,6 +100,7 @@ public class DisplayInfo implements Serializable {
     }
 
     public void setLastResolution(String lastResolution) {
+        Log.i("HdmiSettings", "setLastResolution " + lastResolution);
         this.lastResolution = lastResolution;
     }
 

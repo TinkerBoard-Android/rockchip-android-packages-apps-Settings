@@ -67,6 +67,10 @@ import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+//----------------------rk code---------------------------
+import com.android.settings.wifi.details.WifiNetworkDetailsFragment;
+//--------------------------------------------------------
+
 /**
  * Base fragment for dashboard style UI containing a list of static and dynamic setting items.
  */
@@ -392,7 +396,15 @@ public abstract class DashboardFragment extends SettingsPreferenceFragment
      */
     protected void updatePreferenceStates() {
         final PreferenceScreen screen = getPreferenceScreen();
-        PackageManager packageManager = getContext().getPackageManager();
+        //----------------------rk modify it----------------------
+        Context context = getContext();
+        if (null == context && this instanceof WifiNetworkDetailsFragment) {
+            Log.w(TAG, "finish WifiNetworkDetailsFragment page while context null");
+            finish();
+            return;
+        }
+        PackageManager packageManager = context.getPackageManager();
+        //--------------------------------------------------------
         if(!packageManager.hasSystemFeature(PackageManager.FEATURE_TELEPHONY)){
             Preference preference = screen.findPreference(EMERGENCY_KEY);
             if(preference != null){

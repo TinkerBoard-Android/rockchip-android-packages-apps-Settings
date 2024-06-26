@@ -24,6 +24,7 @@ import android.os.CancellationSignal;
 import android.os.Handler;
 import android.os.UserHandle;
 
+import com.android.settings.biometrics.face.FacePreviewListener;
 import com.android.settings.core.InstrumentedFragment;
 import com.android.settings.password.ChooseLockSettingsHelper;
 
@@ -34,7 +35,7 @@ import java.util.ArrayList;
  * the state of enrollment throughout the activity lifecycle so the app can continue after an
  * event like rotation.
  */
-public abstract class BiometricEnrollSidecar extends InstrumentedFragment {
+public abstract class BiometricEnrollSidecar extends InstrumentedFragment implements FacePreviewListener {
 
     public interface Listener {
         void onEnrollmentHelp(int helpMsgId, CharSequence helpString);
