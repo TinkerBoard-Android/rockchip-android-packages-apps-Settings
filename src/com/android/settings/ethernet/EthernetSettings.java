@@ -52,6 +52,10 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
 
@@ -216,6 +220,7 @@ public class EthernetSettings extends SettingsPreferenceFragment implements
         addPreferencesFromResource(R.xml.ethernet_settings);
         mContext = this.getActivity().getApplicationContext();
         mEthManager = (EthernetManager) getSystemService(Context.ETHERNET_SERVICE);
+        int ethx_info_update = 0;
 
         if (mEthManager == null) {
             Log.e(TAG, "get ethernet manager failed");
@@ -232,14 +237,27 @@ public class EthernetSettings extends SettingsPreferenceFragment implements
             Log.e(TAG, "ReflectUtils EthManager getNetmask result == null ! ");
             return;
         }
+
         for (String iface : ifaces) {
-            if (TextUtils.isEmpty(ASSIGN_ETH)) {
-                mEthInfoList.put(iface, null);
-            } else if (ASSIGN_ETH.equals(iface)) {
-                mEthInfoList.put(iface, null);
-                break;
+            try {
+                String carrierFilePath = "/sys/class/net/" + iface + "/carrier";
+                BufferedReader reader = new BufferedReader(new FileReader(carrierFilePath));
+                String carrierStatus = reader.readLine();
+                reader.close();
+                if (TextUtils.isEmpty(iface)) {
+                    mEthInfoList.put(iface, null);
+                } else if (("1".equals(carrierStatus) == true)) {
+                    mEthInfoList.put(iface, null);
+                    ethx_info_update = 1;
+                    break;
+                }
+            } catch (IOException e) {
+                Log.e(TAG, "Could not read carrier status for interface");
             }
         }
+
+        if (ethx_info_update == 0)
+            mEthInfoList.put(ASSIGN_ETH, null);
 
         if (mEthInfoList.size() == 0) {
             Log.e(TAG, "get ethernet ifaceName failed");
