@@ -22,6 +22,7 @@ import static com.android.settings.display.ScreenTimeoutSettings.FALLBACK_SCREEN
 
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.os.Build;
 import android.os.UserHandle;
 import android.os.UserManager;
 import android.provider.Settings;
@@ -53,6 +54,9 @@ public class ScreenTimeoutPreferenceController extends BasePreferenceController 
 
     @Override
     public int getAvailabilityStatus() {
+        if (Build.MODEL.equals("RVMON7 CTRL PCB")) {
+            return UNSUPPORTED_ON_DEVICE;
+        }
         return AVAILABLE;
     }
 
