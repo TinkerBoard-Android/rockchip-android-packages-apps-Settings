@@ -61,6 +61,12 @@
             android:summary="@string/keep_screen_on_summary"
             settings:useAdditionalSummary="true" />
 
+        <com.android.settingslib.RestrictedSwitchPreference
+            android:key="root_setting_switch"
+            android:title="Get rooted"
+            android:summary="The users will attain privileged control (known as root access)\nPlease reboot the device for the changes to take effect"
+            android:defaultValue="false" />
+
         <ListPreference
             android:key="hdcp_checking"
             android:title="@string/hdcp_checking_title"
