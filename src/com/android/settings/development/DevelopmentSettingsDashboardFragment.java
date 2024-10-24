@@ -621,6 +621,10 @@ public class DevelopmentSettingsDashboardFragment extends RestrictedDashboardFra
         controllers.add(new DevelopmentMemtagPagePreferenceController(context, fragment));
         controllers.add(new LocalBackupPasswordPreferenceController(context));
         controllers.add(new StayAwakePreferenceController(context, lifecycle));
+	String rootSetting = SystemProperties.get("ro.build.type", "unknown");
+	if (!"user".equals(rootSetting)) {
+		controllers.add(new RootSettingPreferenceController(context, lifecycle));
+	}
         controllers.add(new HdcpCheckingPreferenceController(context));
         controllers.add(new BluetoothSnoopLogPreferenceController(context, fragment));
         controllers.add(new DefaultLaunchPreferenceController(context,

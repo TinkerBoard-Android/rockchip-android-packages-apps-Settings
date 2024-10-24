@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.preference.PreferenceManager.OnActivityResultListener;
 import android.text.TextUtils;
 import android.util.ArrayMap;
@@ -209,6 +210,13 @@ public abstract class DashboardFragment extends SettingsPreferenceFragment
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         checkUiBlocker(mControllers);
         refreshAllPreferences(getLogTag());
+
+	String rootSetting = SystemProperties.get("ro.build.type", "unknown");
+	Preference rootSettingSwitch = findPreference("root_setting_switch");
+	if (rootSettingSwitch != null) {
+		rootSettingSwitch.setVisible(!"user".equals(rootSetting));
+	}
+
         mControllers.stream()
                 .map(controller -> (Preference) findPreference(controller.getPreferenceKey()))
                 .filter(Objects::nonNull)
