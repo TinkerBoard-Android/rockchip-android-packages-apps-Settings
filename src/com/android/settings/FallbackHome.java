@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -107,7 +108,8 @@ public class FallbackHome extends Activity {
     protected void onResume() {
         super.onResume();
         if (mProvisioned) {
-            mHandler.postDelayed(mProgressTimeoutRunnable, PROGRESS_TIMEOUT);
+            if (!Build.MODEL.equals("RVMON7 CTRL PCB"))
+                mHandler.postDelayed(mProgressTimeoutRunnable, PROGRESS_TIMEOUT);
         }
     }
 
