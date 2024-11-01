@@ -17,6 +17,7 @@
 package com.android.settings.display;
 
 import android.content.Context;
+import android.os.SystemProperties;
 import android.provider.Settings;
 
 import androidx.preference.Preference;
@@ -37,7 +38,14 @@ public class LockscreenClockPreferenceController extends TogglePreferenceControl
 
     @Override
     public boolean isChecked() {
-        return Settings.Secure.getInt(mContext.getContentResolver(), SETTING_KEY, 1) != 0;
+        if (SystemProperties.get("ro.product.name").equals("Sanden_CM"))
+        {
+            return Settings.Secure.getInt(mContext.getContentResolver(), SETTING_KEY, 0) != 0;
+        }
+        else
+        {
+            return Settings.Secure.getInt(mContext.getContentResolver(), SETTING_KEY, 1) != 0;
+        }
     }
 
     @Override
