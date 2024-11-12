@@ -356,7 +356,7 @@ public class HdmiSettings extends SettingsPreferenceFragment
         mHdmiCec.setOnPreferenceClickListener(this);
 
         //Full Screen control
-        if (SystemProperties.getBoolean("persist.fullscreen.enable", false)) {
+        if (SystemProperties.getBoolean("persist.vendor.fullscreen.enable", false)) {
             mFullScreenControlEnabled = 1;
         }
         else
@@ -462,7 +462,7 @@ public class HdmiSettings extends SettingsPreferenceFragment
     }
 
     public void UpdateFullScreenValue() {
-        if (SystemProperties.getBoolean("persist.fullscreen.enable", false)) {
+        if (SystemProperties.getBoolean("persist.vendor.fullscreen.enable", false)) {
             mFullScreenControlEnabled = 1;
         }
         else {
@@ -470,10 +470,10 @@ public class HdmiSettings extends SettingsPreferenceFragment
         }
 
         if (mFullScreenControlEnabled == 1) {
-            SystemProperties.set("persist.fullscreen.enable", "false");
+            SystemProperties.set("persist.vendor.fullscreen.enable", "false");
             Log.i(TAG, "Disable Full Screen");
         } else {
-            SystemProperties.set("persist.fullscreen.enable", "true");
+            SystemProperties.set("persist.vendor.fullscreen.enable", "true");
             Log.i(TAG, "enable Full Screen");
         }
 	set_fullscreen_reboot();
