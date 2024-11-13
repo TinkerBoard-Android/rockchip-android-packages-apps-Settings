@@ -167,6 +167,12 @@
         <Preference android:key="clear_adb_keys"
                     android:title="@string/clear_adb_keys" />
 
+        <com.android.settingslib.RestrictedSwitchPreference
+            android:key="toggle_adb_ethernet"
+            android:title="@string/enable_adb_ethernet"
+            android:summary="@string/enable_adb_ethernet_summary"
+            android:defaultValue="false" />
+
         <com.android.settingslib.PrimarySwitchPreference
             android:fragment="com.android.settings.development.WirelessDebuggingFragment"
             android:key="toggle_adb_wireless"
