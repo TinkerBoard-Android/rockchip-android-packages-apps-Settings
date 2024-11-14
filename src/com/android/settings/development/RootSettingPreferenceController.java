@@ -71,99 +71,16 @@ public class RootSettingPreferenceController extends DeveloperOptionsPreferenceC
 
 	SystemProperties.set("persist.root_enable.mode", rootSetting ? "true" : "false");
 
-	if (rootSetting){
-		addRootEnableToCmdline();
-	}else{
-		removeRootEnableFromCmdline();
-	}
-
         return true;
     }
 
-    private void addRootEnableToCmdline(){
-	String filePath = "/dtoverlay/cmdline.txt";
-	String newEntry = "root_enable=1";
-    	try{
-		String content = readFile(filePath);
-		StringBuilder updatedContent = new StringBuilder();
-
-		String[] lines = content.split("\n");
-
-		if (lines.length == 1 && lines[0].trim().equals("##### Note: Each line must be less than 160 words in txt. #####")) {
-			updatedContent.append(lines[0]).append("\n").append(newEntry);
-		} else {
-			boolean entryExists = false;
-			for (String line : lines) {
-				if (line.contains(newEntry)) {
-					entryExists = true;
-				}
-				updatedContent.append(line).append("\n");
-			}
-			if (!entryExists) {
-				updatedContent.append(newEntry);
-			}
-		}
-        	writeFile(filePath, updatedContent.toString().trim());
-	}catch (IOException e){
-		e.printStackTrace();
-	}
-    }
-
-    private void removeRootEnableFromCmdline(){
-	String filePath = "/dtoverlay/cmdline.txt";
-	String entryToRemove = "root_enable=1";
-	try{
-		String content = readFile(filePath);
-
-		content = content.replace(entryToRemove, "").trim();
-		content = content.replaceAll(" +", " ");
-		writeFile(filePath, content);
-	}catch (IOException e){
-		e.printStackTrace();
-	}
-    }
-    private String readFile(String filePath) throws IOException {
-        StringBuilder content = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new FileReader(filePath));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            content.append(line);
-        }
-        reader.close();
-        return content.toString();
-    }
-
-    private void writeFile(String filePath, String content) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-        writer.write(content);
-        writer.close();
-    }
 
     @Override
     public void updateState(Preference preference) {
         String rootSettingMode = SystemProperties.get("persist.root_enable.mode", "false");
-	boolean isCmdlineEnabled = false;
-	String cmdlineContent = readCmdlineFile("/dtoverlay/cmdline.txt");
-	if (cmdlineContent != null) {
-		isCmdlineEnabled = cmdlineContent.contains("root_enable=1");
-	}
 
-	boolean isChecked = "true".equals(rootSettingMode) && isCmdlineEnabled;
+	boolean isChecked = "true".equals(rootSettingMode);
 	mPreference.setChecked(isChecked);
-    }
-
-    private String readCmdlineFile(String filePath) {
-	StringBuilder content = new StringBuilder();
-	try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-		String line;
-		while ((line = reader.readLine()) != null) {
-			content.append(line);
-		}
-	}catch (IOException e) {
-		e.printStackTrace();
-		return null;
-	}
-	return content.toString();
     }
 
     @Override
