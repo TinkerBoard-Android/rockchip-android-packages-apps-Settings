@@ -64,7 +64,7 @@
         <com.android.settingslib.RestrictedSwitchPreference
             android:key="root_setting_switch"
             android:title="Get rooted"
-            android:summary="The users will attain privileged control (known as root access)\nPlease reboot the device for the changes to take effect"
+            android:summary="The users will attain privileged control (known as root access)"
             android:defaultValue="false" />
 
         <ListPreference
