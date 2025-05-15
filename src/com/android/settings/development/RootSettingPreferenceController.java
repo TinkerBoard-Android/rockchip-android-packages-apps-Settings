@@ -30,6 +30,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 
+import android.util.Log;
+
 public class RootSettingPreferenceController extends DeveloperOptionsPreferenceController
         implements Preference.OnPreferenceChangeListener, LifecycleObserver, OnResume, OnPause,
         PreferenceControllerMixin {
@@ -80,15 +82,19 @@ public class RootSettingPreferenceController extends DeveloperOptionsPreferenceC
         String rootSettingMode = SystemProperties.get("persist.root_enable.mode", "false");
 
 	boolean isChecked = "true".equals(rootSettingMode);
+	Log.i(TAG, "updateState:" + rootSettingMode);
 	mPreference.setChecked(isChecked);
     }
 
     @Override
     public void onResume() {
+	Log.i(TAG, "onResume ");
         if (mPreference == null) {
             return;
         }
+        updateState(mPreference); 
     }
+
 
     @Override
     public void onPause() {
